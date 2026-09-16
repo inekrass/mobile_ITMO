@@ -14,5 +14,16 @@ import Foundation
     print("Разность:", difference)
     print("Произведение:", product)
     print("Деление:", division)
+    
+    
+    //Decimal vs Double
 
+    let a = 0.1 //Double
+    let b = 0.2 //Double
+    print(a + b) //0.30000000000000004
+
+    
+    let c = Decimal(0.1)
+    let d = Decimal(0.2)
+    print(c + d) //0.3
 }
