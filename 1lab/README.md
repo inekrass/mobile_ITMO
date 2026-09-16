@@ -16,7 +16,7 @@ print(a + b) //0.30000000000000004
 let c = Decimal(0.1)
 let d = Decimal(0.2)
 print(c + d) //0.3
-    ```
+```
 
 ### 2. Проверка окружения
 Версия Swift:
@@ -37,7 +37,7 @@ Build version 27A266a
 ```bash
 swiftc 1stLab.swift -o firstApp
 ```
-Команда swiftc запускает компилятор Swift.
+Команда `swiftc` запускает компилятор Swift.
 
 - Запуск программы:
 ```bash
