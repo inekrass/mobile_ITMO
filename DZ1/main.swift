@@ -79,15 +79,29 @@ class Dog: Animal {
     }
 }
 
-let animal = Animal(name: "Тоша")
-print(animal.description)
-print(animal.makeSound())
+class Zoo {
+    var animals: [Animal] = []
 
-animal.growOlder()
-print(animal.description)
+    func add(animal: Animal) {
+        animals.append(animal)
+    }
 
-animal.eat()
-print(animal.description)
+    func showAnimals() {
+        for animal in animals {
+            print("\(animal.description), звук: \(animal.makeSound())")
+        }
+    }
+}
+
+let tosha = Animal(name: "Тоша")
+print(tosha.description)
+print(tosha.makeSound())
+
+tosha.growOlder()
+print(tosha.description)
+
+tosha.eat()
+print(tosha.description)
 
 let rabbit = Rabbit(name: "Пушок")
 let parrot = Parrot(name: "Кеша")
@@ -101,3 +115,18 @@ print("Попугай:", parrot.makeSound(), parrot.maxAge)
 print("Черепаха:", turtle.makeSound(), turtle.maxAge)
 print("Кот:", cat.makeSound(), cat.maxAge)
 print("Собака:", dog.makeSound(), dog.maxAge)
+
+let zoo = Zoo()
+zoo.add(animal: rabbit)
+zoo.add(animal: parrot)
+zoo.add(animal: turtle)
+zoo.add(animal: cat)
+zoo.add(animal: dog)
+zoo.add(animal: Rabbit(name: "Снежок"))
+zoo.add(animal: Parrot(name: "Рио"))
+zoo.add(animal: Turtle(name: "Тина"))
+zoo.add(animal: Cat(name: "Мурка"))
+zoo.add(animal: Dog(name: "Рекс"))
+
+print()
+zoo.showAnimals()
