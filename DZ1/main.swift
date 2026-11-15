@@ -15,6 +15,10 @@ class Animal {
         10
     }
 
+    var isAlive: Bool {
+        age < maxAge && daysWithoutFood < 3
+    }
+
     func makeSound() -> String {
         "Неизвестный звук"
     }
@@ -130,3 +134,24 @@ zoo.add(animal: Dog(name: "Рекс"))
 
 print()
 zoo.showAnimals()
+
+print()
+let fluffy = Rabbit(name: "Пушинка")
+fluffy.growOlder()
+fluffy.growOlder()
+print("Пушинка жива после двух дней без еды:", fluffy.isAlive)
+fluffy.growOlder()
+print("Пушинка жива после трёх дней без еды:", fluffy.isAlive)
+
+let ginger = Cat(name: "Рыжик")
+ginger.growOlder()
+ginger.growOlder()
+ginger.eat()
+ginger.growOlder()
+print("Рыжик жив после кормления перед третьим днём:", ginger.isAlive)
+
+let shell = Turtle(name: "Шелли")
+shell.age = shell.maxAge - 1
+print("Шелли жива в \(shell.age) лет:", shell.isAlive)
+shell.growOlder()
+print("Шелли жива в \(shell.age) лет:", shell.isAlive)
