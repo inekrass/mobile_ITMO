@@ -23,6 +23,10 @@ class Animal {
         "Неизвестный звук"
     }
 
+    func makeBaby() -> Animal {
+        Animal(name: "Малыш")
+    }
+
     func eat() {
         daysWithoutFood = 0
     }
@@ -41,6 +45,10 @@ class Rabbit: Animal {
     override func makeSound() -> String {
         "Фыр-фыр"
     }
+
+    override func makeBaby() -> Animal {
+        Rabbit(name: "Малыш")
+    }
 }
 
 class Parrot: Animal {
@@ -50,6 +58,10 @@ class Parrot: Animal {
 
     override func makeSound() -> String {
         "Привет!"
+    }
+
+    override func makeBaby() -> Animal {
+        Parrot(name: "Малыш")
     }
 }
 
@@ -61,6 +73,10 @@ class Turtle: Animal {
     override func makeSound() -> String {
         "Тишина — тоже ответ"
     }
+
+    override func makeBaby() -> Animal {
+        Turtle(name: "Малыш")
+    }
 }
 
 class Cat: Animal {
@@ -71,6 +87,10 @@ class Cat: Animal {
     override func makeSound() -> String {
         "Мяу"
     }
+
+    override func makeBaby() -> Animal {
+        Cat(name: "Малыш")
+    }
 }
 
 class Dog: Animal {
@@ -80,6 +100,10 @@ class Dog: Animal {
 
     override func makeSound() -> String {
         "Гав"
+    }
+
+    override func makeBaby() -> Animal {
+        Dog(name: "Малыш")
     }
 }
 
@@ -98,13 +122,22 @@ class Zoo {
 
     func liveOneDay(action: Int? = nil) {
         let todayAnimals = animals
+        var babies: [Animal] = []
 
         for animal in todayAnimals {
-            let chosenAction = action ?? Int.random(in: 1...2)
+            let chosenAction = action ?? Int.random(in: 1...3)
 
             if chosenAction == 1 {
                 animal.eat()
                 print("\(animal.name) ест.")
+            } else if chosenAction == 3 {
+                print("\(animal.name) пытается завести малыша.")
+                if animal.age >= 2 && animal.daysWithoutFood <= 1 &&
+                    todayAnimals.count + babies.count < 30 {
+                    let baby = animal.makeBaby()
+                    babies.append(baby)
+                    print("У \(animal.name) появился детёныш по имени \(baby.name).")
+                }
             } else {
                 print("\(animal.name) отдыхает.")
             }
@@ -113,6 +146,7 @@ class Zoo {
         }
 
         animals.removeAll { !$0.isAlive }
+        animals.append(contentsOf: babies)
         print("Осталось животных: \(animals.count)")
     }
 }
@@ -185,6 +219,12 @@ snowball.growOlder()
 testZoo.add(animal: snowball)
 testZoo.liveOneDay(action: 1)
 print(snowball.description)
+
+print()
+print("Проверка дня с рождением")
+testZoo.add(animal: Parrot(name: "Чижик"))
+testZoo.liveOneDay(action: 3)
+testZoo.showAnimals()
 
 print()
 for day in 1...10 {
