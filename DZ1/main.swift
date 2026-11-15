@@ -109,6 +109,8 @@ class Dog: Animal {
 
 class Zoo {
     var animals: [Animal] = []
+    private(set) var birthCount = 0
+    private(set) var deathCount = 0
 
     func add(animal: Animal) {
         animals.append(animal)
@@ -136,7 +138,7 @@ class Zoo {
                     todayAnimals.count + babies.count < 30 {
                     let baby = animal.makeBaby()
                     babies.append(baby)
-                    print("У \(animal.name) появился детёныш по имени \(baby.name).")
+                    print("\(animal.name): появился детёныш по имени \(baby.name).")
                 }
             } else {
                 print("\(animal.name) отдыхает.")
@@ -145,8 +147,16 @@ class Zoo {
             animal.growOlder()
         }
 
+        for animal in todayAnimals {
+            if !animal.isAlive {
+                print("\(animal.name) погибает.")
+                deathCount += 1
+            }
+        }
+
         animals.removeAll { !$0.isAlive }
         animals.append(contentsOf: babies)
+        birthCount += babies.count
         print("Осталось животных: \(animals.count)")
     }
 }
@@ -227,7 +237,9 @@ testZoo.liveOneDay(action: 3)
 testZoo.showAnimals()
 
 print()
-for day in 1...10 {
+let initialCount = zoo.animals.count
+
+for day in 1...30 {
     if zoo.animals.isEmpty {
         break
     }
@@ -235,3 +247,16 @@ for day in 1...10 {
     print("День \(day)")
     zoo.liveOneDay()
 }
+
+print()
+print("Итоги симуляции")
+print("Было животных: \(initialCount)")
+print("Рождений: \(zoo.birthCount)")
+print("Смертей: \(zoo.deathCount)")
+print("Осталось животных: \(zoo.animals.count)")
+
+let expectedCount = initialCount + zoo.birthCount - zoo.deathCount
+let balanceIsCorrect = expectedCount == zoo.animals.count
+print("Проверка баланса: \(initialCount) + \(zoo.birthCount) - \(zoo.deathCount) = \(expectedCount)")
+print("Баланс сходится:", balanceIsCorrect)
+assert(balanceIsCorrect)
