@@ -95,6 +95,26 @@ class Zoo {
             print("\(animal.description), звук: \(animal.makeSound())")
         }
     }
+
+    func liveOneDay(action: Int? = nil) {
+        let todayAnimals = animals
+
+        for animal in todayAnimals {
+            let chosenAction = action ?? Int.random(in: 1...2)
+
+            if chosenAction == 1 {
+                animal.eat()
+                print("\(animal.name) ест.")
+            } else {
+                print("\(animal.name) отдыхает.")
+            }
+
+            animal.growOlder()
+        }
+
+        animals.removeAll { !$0.isAlive }
+        print("Осталось животных: \(animals.count)")
+    }
 }
 
 let tosha = Animal(name: "Тоша")
@@ -152,6 +172,26 @@ print("Рыжик жив после кормления перед третьим
 
 let shell = Turtle(name: "Шелли")
 shell.age = shell.maxAge - 1
-print("Шелли жива в \(shell.age) лет:", shell.isAlive)
+print("Шелли жива в \(shell.age) дней:", shell.isAlive)
 shell.growOlder()
-print("Шелли жива в \(shell.age) лет:", shell.isAlive)
+print("Шелли жива в \(shell.age) дней:", shell.isAlive)
+
+print()
+print("Проверка дня с кормлением")
+let testZoo = Zoo()
+let snowball = Rabbit(name: "Снежинка")
+snowball.growOlder()
+snowball.growOlder()
+testZoo.add(animal: snowball)
+testZoo.liveOneDay(action: 1)
+print(snowball.description)
+
+print()
+for day in 1...10 {
+    if zoo.animals.isEmpty {
+        break
+    }
+
+    print("День \(day)")
+    zoo.liveOneDay()
+}
