@@ -14,20 +14,63 @@ struct Equipment {
     }
 }
 
-let tent = Equipment(title: "Палатка для похода", price: 2500, kind: .tent)
-let chair = Equipment(title: "Кресло рыболовное", price: 700, kind: .chair)
-let lamp = Equipment(title: "Лампа настольная", price: 400, kind: .lamp)
-let catalog = [tent, chair, lamp]
+let text = """
+tent;Палатка для похода;2500
+chair;Кресло рыболовное;700
+lamp;Лампа настольная;400
+lamp;Запасная лампа;300
+unknown;Что-то загадочное;100
+chair;Сломанное кресло;ошибка
+"""
+
+var catalog: [Equipment] = []
+var errorCount = 0
+
+for line in text.split(separator: "\n") {
+    let parts = line.split(separator: ";", omittingEmptySubsequences: false)
+
+    guard parts.count == 3 else {
+        print("Пропущена строка с неверным количеством полей: \(line)")
+        errorCount += 1
+        continue
+    }
+
+    guard let kind = EquipmentKind(rawValue: String(parts[0])) else {
+        print("Пропущена строка с неизвестной категорией: \(line)")
+        errorCount += 1
+        continue
+    }
+
+    let title = String(parts[1])
+    guard !title.isEmpty else {
+        print("Пропущена строка с пустым названием: \(line)")
+        errorCount += 1
+        continue
+    }
+
+    guard let price = Int(String(parts[2])), price >= 0 else {
+        print("Пропущена строка с неверной ценой: \(line)")
+        errorCount += 1
+        continue
+    }
+
+    catalog.append(Equipment(title: title, price: price, kind: kind))
+}
+
+print("Корректных записей: \(catalog.count)")
+print("Ошибочных строк: \(errorCount)")
 
 for item in catalog {
     print(item.description)
 }
 
-var chairCopy = chair
-chairCopy.price = 500
+if let item = catalog.first {
+    var copy = item
+    copy.price = 500
 
-print("Цена исходного кресла: \(chair.price)")
-print("Цена копии: \(chairCopy.price)")
+    print("Цена исходного предмета: \(item.price)")
+    print("Цена копии: \(copy.price)")
+}
 
 var totalPrice = 0
 var lampCount = 0
