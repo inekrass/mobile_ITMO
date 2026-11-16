@@ -22,3 +22,9 @@ let catalog = [tent, chair, lamp]
 for item in catalog {
     print(item.description)
 }
+
+var chairCopy = chair
+chairCopy.price = 500
+
+print("Цена исходного кресла: \(chair.price)")
+print("Цена копии: \(chairCopy.price)")
