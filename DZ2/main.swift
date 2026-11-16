@@ -1,3 +1,5 @@
+import Foundation
+
 enum EquipmentKind: String {
     case tent
     case chair
@@ -14,19 +16,22 @@ struct Equipment {
     }
 }
 
-let text = """
-tent;Палатка для похода;2500
-chair;Кресло рыболовное;700
-lamp;Лампа настольная;400
-lamp;Запасная лампа;300
-unknown;Что-то загадочное;100
-chair;Сломанное кресло;ошибка
-"""
+let path = "DZ2/equipment.txt"
+let text: String
+
+do {
+    text = try String(contentsOfFile: path, encoding: .utf8)
+} catch {
+    print("Не удалось прочитать \(path): \(error.localizedDescription)")
+    exit(1)
+}
+
+let normalizedText = text.replacingOccurrences(of: "\r\n", with: "\n")
 
 var catalog: [Equipment] = []
 var errorCount = 0
 
-for line in text.split(separator: "\n") {
+for line in normalizedText.split(separator: "\n") {
     let parts = line.split(separator: ";", omittingEmptySubsequences: false)
 
     guard parts.count == 3 else {
