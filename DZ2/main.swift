@@ -28,3 +28,22 @@ chairCopy.price = 500
 
 print("Цена исходного кресла: \(chair.price)")
 print("Цена копии: \(chairCopy.price)")
+
+var totalPrice = 0
+var lampCount = 0
+
+print("Предметы дешевле 1000:")
+for item in catalog {
+    if item.price < 1000 {
+        print(item.description)
+    }
+
+    totalPrice += item.price
+
+    if item.kind == .lamp {
+        lampCount += 1
+    }
+}
+
+print("Общая цена: \(totalPrice)")
+print("Количество ламп: \(lampCount)")
